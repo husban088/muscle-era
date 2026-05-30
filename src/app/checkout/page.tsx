@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { loadStripe } from "@stripe/stripe-js";
@@ -14,10 +14,11 @@ import {
 } from "@stripe/react-stripe-js";
 
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
 );
 
-export default function Checkout() {
+// ✅ Alag component banaya jo useSearchParams use karta hai
+function CheckoutContent() {
   const searchParams = useSearchParams();
   const planName = searchParams.get("plan") || "Basic";
   const billing = searchParams.get("billing") || "monthly";
@@ -76,6 +77,21 @@ export default function Checkout() {
         selectedPlan={selectedPlan}
       />
     </Elements>
+  );
+}
+
+// ✅ Default export mein Suspense wrap kiya
+export default function Checkout() {
+  return (
+    <Suspense
+      fallback={
+        <div className="bg-[#171717] min-h-screen flex items-center justify-center text-white">
+          Loading...
+        </div>
+      }
+    >
+      <CheckoutContent />
+    </Suspense>
   );
 }
 
@@ -147,7 +163,7 @@ function CheckoutForm({
       } else {
         setError(result.error || "Payment failed");
       }
-    } catch (error) {
+    } catch (_error) {
       setError("Payment failed: Network error");
     } finally {
       setIsSubmitting(false);
