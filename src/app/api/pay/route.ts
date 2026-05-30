@@ -1,25 +1,32 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-06-30.basil", // Updated to match the expected API version
-});
-
 export async function POST(request: Request) {
   try {
-    const { plan, billing, paymentMethodId, amount } = await request.json();
-
-    // Validate input
-    if (!plan || !billing || !paymentMethodId || !amount) {
+    // ✅ Runtime pe initialize karo, module level pe nahi
+    const stripeKey = process.env.STRIPE_SECRET_KEY;
+    if (!stripeKey) {
       return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
+        { error: "Stripe key not configured" },
+        { status: 500 },
       );
     }
 
-    // Create a PaymentIntent with the payment method ID
+    const stripe = new Stripe(stripeKey, {
+      apiVersion: "2025-06-30.basil",
+    });
+
+    const { plan, billing, paymentMethodId, amount } = await request.json();
+
+    if (!plan || !billing || !paymentMethodId || !amount) {
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 },
+      );
+    }
+
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount * 100, // Convert PKR to paisa
+      amount: amount * 100,
       currency: "pkr",
       payment_method: paymentMethodId,
       confirm: true,
@@ -28,11 +35,10 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ status: "success", paymentIntent });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Payment error:", error);
-    return NextResponse.json(
-      { error: error.message || "Payment processing failed" },
-      { status: 400 }
-    );
+    const message =
+      error instanceof Error ? error.message : "Payment processing failed";
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 }
