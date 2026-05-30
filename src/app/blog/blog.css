@@ -1,0 +1,912 @@
+/* ================================================================
+   MUSCLE ERA — BLOG PAGE CSS
+   Place at: app/blog/blog.css
+   Import in: app/blog/page.tsx  →  import "./blog.css";
+   ================================================================ */
+
+/* ─── BASE ─── */
+.blog-page {
+  background-color: #111;
+  color: #fff;
+  font-family: "Zen Dots", sans-serif;
+  overflow-x: hidden;
+}
+
+/* ================================================================
+   HERO BANNER  — same style as Contact page
+   ================================================================ */
+.blog-banner {
+  position: relative; /* ← needed for fill Image & overlay */
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* ← prevents image bleeding out */
+}
+
+/* The Next.js Image wrapper sits behind everything */
+.blog-banner-bg {
+  position: absolute;
+  inset: 0; /* top:0 right:0 bottom:0 left:0 */
+  z-index: 0;
+}
+
+/* Next.js Image inside .blog-banner-bg uses fill prop,
+   objectFit:cover is set inline in JSX — no extra CSS needed */
+
+.blog-banner-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.82) 0%,
+    rgba(2, 139, 143, 0.25) 100%
+  );
+}
+
+.blog-banner-content {
+  position: relative;
+  z-index: 2; /* above overlay */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.blog-banner-sub {
+  font-size: 0.85rem;
+  letter-spacing: 0.35em;
+  color: #028b8f;
+  text-transform: uppercase;
+}
+
+.blog-banner-title {
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.blog-banner-divider {
+  width: 80px;
+  height: 3px;
+  background: #028b8f;
+  margin: 0.4rem 0;
+}
+
+.blog-banner-breadcrumb {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.breadcrumb-sep {
+  color: #028b8f;
+}
+.breadcrumb-active {
+  color: #028b8f;
+}
+
+/* ================================================================
+   FILTER / CATEGORY BAR
+   ================================================================ */
+.blog-filter-section {
+  padding: 3rem 2rem 1.5rem;
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.blog-section-heading {
+  text-align: center;
+}
+
+.blog-sub-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.3em;
+  color: #028b8f;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.blog-main-title {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.blog-title-line {
+  width: 60px;
+  height: 3px;
+  background: #028b8f;
+  margin: 0.8rem auto 0;
+}
+
+.blog-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  justify-content: center;
+}
+
+.filter-btn {
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  color: #aaa;
+  padding: 0.55rem 1.4rem;
+  font-family: "Zen Dots", sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  clip-path: polygon(6% 0%, 100% 0%, 94% 100%, 0% 100%);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.filter-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #028b8f;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+
+.filter-btn:hover::before,
+.filter-btn.active::before {
+  transform: scaleX(1);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  color: #fff;
+  border-color: #028b8f;
+}
+
+/* ================================================================
+   FEATURED POST
+   ================================================================ */
+.blog-featured-section {
+  padding: 2rem 2rem 1rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.featured-label-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.featured-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: #028b8f;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.featured-label-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, #028b8f, transparent);
+}
+
+/* The card is the positioning parent for the image wrapper */
+.featured-card {
+  position: relative; /* ← required for fill Image */
+  height: 520px;
+  overflow: hidden; /* ← clips image to card bounds */
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+  border: 1px solid #2a2a2a;
+}
+
+/* Image wrapper: fill the card completely */
+.featured-card-img-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* The Next.js <Image fill> renders an <img> — make sure it covers */
+.featured-card-img-wrap img,
+.featured-card-img {
+  object-fit: cover !important;
+  object-position: center top !important;
+  width: 100% !important;
+  height: 100% !important;
+  transition: transform 0.7s ease !important;
+}
+
+.featured-card:hover .featured-card-img {
+  transform: scale(1.06) !important;
+}
+
+.featured-card-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.92) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+  transition: background 0.4s ease;
+}
+
+.featured-card:hover .featured-card-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.96) 0%,
+    rgba(2, 139, 143, 0.18) 60%,
+    rgba(0, 0, 0, 0.08) 100%
+  );
+}
+
+.featured-card-content {
+  position: relative;
+  z-index: 2; /* above image & overlay */
+  padding: 2.5rem;
+  width: 100%;
+  transform: translateY(10px);
+  transition: transform 0.4s ease;
+}
+
+.featured-card:hover .featured-card-content {
+  transform: translateY(0);
+}
+
+.featured-tag {
+  display: inline-block;
+  background: #028b8f;
+  color: #fff;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  padding: 0.3rem 0.9rem;
+  clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.featured-card-title {
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+}
+
+.featured-card-excerpt {
+  font-size: 0.78rem;
+  color: #ccc;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+  max-width: 680px;
+  margin-bottom: 1.4rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.4s ease 0.1s,
+    transform 0.4s ease 0.1s;
+}
+
+.featured-card:hover .featured-card-excerpt {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.featured-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.meta-author {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.meta-avatar {
+  width: 34px;
+  height: 34px;
+  background: #028b8f;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.meta-author-name {
+  font-size: 0.72rem;
+  color: #028b8f;
+  letter-spacing: 0.1em;
+}
+.meta-sep {
+  color: #444;
+  font-size: 0.8rem;
+}
+.meta-date,
+.meta-read {
+  font-size: 0.7rem;
+  color: #888;
+  letter-spacing: 0.08em;
+}
+
+.featured-read-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #028b8f;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: "Zen Dots", sans-serif;
+  transition:
+    gap 0.3s ease,
+    color 0.3s ease;
+  padding: 0;
+}
+
+.featured-read-btn:hover {
+  gap: 0.9rem;
+  color: #fff;
+}
+
+.featured-read-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ================================================================
+   BLOG GRID
+   ================================================================ */
+.blog-grid-section {
+  padding: 3rem 2rem 5rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+/* ─── BLOG CARD ─── */
+.blog-card {
+  background: #181818;
+  border: 1px solid #2a2a2a;
+  border-top: 3px solid #028b8f;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  animation: slideIn 0.55s ease-out both;
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 18px 48px rgba(2, 139, 143, 0.2);
+  border-color: #028b8f;
+}
+
+.blog-card.card-delay-0 {
+  animation-delay: 0s;
+}
+.blog-card.card-delay-1 {
+  animation-delay: 0.1s;
+}
+.blog-card.card-delay-2 {
+  animation-delay: 0.2s;
+}
+.blog-card.card-delay-3 {
+  animation-delay: 0.3s;
+}
+.blog-card.card-delay-4 {
+  animation-delay: 0.4s;
+}
+.blog-card.card-delay-5 {
+  animation-delay: 0.5s;
+}
+
+/* ── Thumbnail wrapper — CRITICAL for proper image display ──
+   position:relative + fixed height = Next.js fill Image works perfectly.
+   overflow:hidden ensures nothing bleeds outside the card.         */
+.blog-card-thumb {
+  position: relative; /* ← required for fill Image */
+  width: 100%;
+  height: 240px; /* fixed height — image always fully visible */
+  overflow: hidden; /* ← clips image, no bleed */
+  flex-shrink: 0;
+  background: #1a1a1a;
+}
+
+/* Target the <img> Next.js renders inside fill Image */
+.blog-card-thumb img,
+.blog-card-thumb-img {
+  object-fit: cover !important; /* fills thumb without distortion */
+  object-position: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  transition: transform 0.5s ease !important;
+  display: block !important;
+}
+
+.blog-card:hover .blog-card-thumb img,
+.blog-card:hover .blog-card-thumb-img {
+  transform: scale(1.1) !important;
+}
+
+.blog-card-tag {
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  background: #028b8f;
+  color: #fff;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  padding: 0.28rem 0.9rem 0.28rem 0.7rem;
+  clip-path: polygon(0% 0%, 100% 0%, 94% 100%, 0% 100%);
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.blog-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 139, 143, 0);
+  transition: background 0.35s ease;
+  z-index: 1;
+}
+
+.blog-card:hover .blog-card-overlay {
+  background: rgba(2, 139, 143, 0.08);
+}
+
+.blog-card-body {
+  padding: 1.6rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.8rem;
+}
+
+.blog-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.blog-card-date,
+.blog-card-read {
+  font-size: 0.65rem;
+  color: #666;
+  letter-spacing: 0.08em;
+}
+
+.blog-card-dot {
+  width: 3px;
+  height: 3px;
+  background: #444;
+  border-radius: 50%;
+}
+
+.blog-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+  flex: 1;
+}
+
+.blog-card:hover .blog-card-title {
+  color: #028b8f;
+}
+
+.blog-card-excerpt {
+  font-size: 0.74rem;
+  color: #888;
+  line-height: 2;
+  letter-spacing: 0.03em;
+}
+
+.blog-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.4rem 1.4rem;
+  border-top: 1px solid #222;
+  margin-top: auto;
+}
+
+.blog-card-author {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.card-avatar {
+  width: 28px;
+  height: 28px;
+  background: rgba(2, 139, 143, 0.25);
+  border: 1px solid #028b8f;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #028b8f;
+  flex-shrink: 0;
+}
+
+.card-author-name {
+  font-size: 0.65rem;
+  color: #028b8f;
+  letter-spacing: 0.08em;
+}
+
+.blog-card-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #555;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Zen Dots", sans-serif;
+  transition:
+    color 0.3s ease,
+    gap 0.3s ease;
+  padding: 0;
+}
+
+.blog-card-link svg {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.3s ease;
+}
+
+.blog-card:hover .blog-card-link {
+  color: #028b8f;
+  gap: 0.7rem;
+}
+.blog-card:hover .blog-card-link svg {
+  transform: translateX(3px);
+}
+
+/* ================================================================
+   LOAD MORE BUTTON
+   ================================================================ */
+.blog-load-more {
+  display: flex;
+  justify-content: center;
+  padding: 0 2rem 4rem;
+}
+
+.load-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 2.5rem;
+  background: transparent;
+  border: 1px solid #028b8f;
+  color: #028b8f;
+  font-family: "Zen Dots", sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.load-more-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #028b8f;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+
+.load-more-btn:hover::before {
+  transform: scaleX(1);
+}
+.load-more-btn:hover {
+  color: #fff;
+}
+.load-more-btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+.load-more-btn:hover svg {
+  transform: translateY(3px);
+}
+
+/* ================================================================
+   NEWSLETTER STRIP
+   ================================================================ */
+.blog-newsletter-strip {
+  background: linear-gradient(135deg, #0d2020 0%, #111 50%, #0a2525 100%);
+  border-top: 1px solid #1e4040;
+  border-bottom: 1px solid #1e4040;
+  padding: 4rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-newsletter-strip::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    circle,
+    rgba(2, 139, 143, 0.08) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.newsletter-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.newsletter-icon {
+  width: 64px;
+  height: 64px;
+  background: rgba(2, 139, 143, 0.15);
+  border: 1.5px solid #028b8f;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #028b8f;
+}
+
+.newsletter-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.newsletter-sub {
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: #028b8f;
+  text-transform: uppercase;
+}
+
+.newsletter-title {
+  font-size: clamp(1.3rem, 3vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.newsletter-desc {
+  font-size: 0.76rem;
+  color: #888;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 0;
+  width: 100%;
+  max-width: 480px;
+}
+
+.newsletter-input {
+  flex: 1;
+  background: #111;
+  border: 1px solid #333;
+  border-right: none;
+  color: #fff;
+  padding: 0.9rem 1.2rem;
+  font-family: "Zen Dots", sans-serif;
+  font-size: 0.75rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+  min-width: 0;
+}
+
+.newsletter-input::placeholder {
+  color: #555;
+}
+.newsletter-input:focus {
+  border-color: #028b8f;
+}
+
+.newsletter-submit {
+  background: #028b8f;
+  border: 1px solid #028b8f;
+  color: #fff;
+  padding: 0.9rem 1.5rem;
+  font-family: "Zen Dots", sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  clip-path: polygon(0% 0%, 100% 0%, 88% 100%, 0% 100%);
+  transition: background 0.3s ease;
+  white-space: nowrap;
+}
+
+.newsletter-submit:hover {
+  background: #026c70;
+}
+
+.newsletter-success {
+  background: rgba(2, 139, 143, 0.15);
+  border: 1px solid #028b8f;
+  color: #028b8f;
+  padding: 0.9rem 1.4rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+/* ================================================================
+   KEYFRAMES
+   ================================================================ */
+@keyframes slideIn {
+  0% {
+    transform: translateY(-40px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ================================================================
+   RESPONSIVE — TABLET  ≤ 1024px
+   ================================================================ */
+@media (max-width: 1024px) {
+  .blog-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ================================================================
+   RESPONSIVE — MOBILE  ≤ 640px
+   ================================================================ */
+@media (max-width: 640px) {
+  /* Banner */
+  .blog-banner {
+    height: 280px;
+  }
+
+  .blog-banner-title {
+    font-size: 2rem;
+  }
+
+  /* Featured card */
+  .featured-card {
+    height: 400px;
+  }
+
+  .featured-card-content {
+    padding: 1.5rem;
+  }
+
+  .featured-card-title {
+    font-size: 1.3rem;
+  }
+
+  /* Filter bar */
+  .blog-filter-section {
+    padding: 2rem 1rem 1rem;
+  }
+
+  .filter-btn {
+    font-size: 0.65rem;
+    padding: 0.45rem 1rem;
+  }
+
+  /* Grid */
+  .blog-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .blog-grid-section {
+    padding: 2rem 1rem 4rem;
+  }
+
+  /* Thumbnail height stays consistent on mobile */
+  .blog-card-thumb {
+    height: 220px;
+  }
+
+  /* Newsletter */
+  .newsletter-form {
+    flex-direction: column;
+  }
+
+  .newsletter-input {
+    border-right: 1px solid #333;
+    border-bottom: none;
+  }
+
+  .newsletter-submit {
+    clip-path: none;
+    text-align: center;
+  }
+
+  /* Load more */
+  .blog-load-more {
+    padding: 0 1rem 3rem;
+  }
+
+  .load-more-btn {
+    clip-path: none;
+    width: 100%;
+    justify-content: center;
+  }
+}

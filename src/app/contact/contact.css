@@ -1,0 +1,507 @@
+/* ================================================================
+   MUSCLE ERA — CONTACT PAGE CSS
+   Place this file at: app/contact/contact.css
+   (imported inside app/contact/page.tsx as ./contact.css)
+   ================================================================ */
+
+/* ─── BASE ─── */
+.contact-page {
+  background-color: #111;
+  color: #fff;
+  font-family: "Zen Dots", sans-serif;
+  overflow-x: hidden;
+}
+
+/* ================================================================
+   HERO BANNER  (same style as About page banner)
+   ================================================================ */
+.contact-banner {
+  position: relative;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("/images/allban.png"); /* swap your image */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.contact-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.82) 0%,
+    rgba(2, 139, 143, 0.25) 100%
+  );
+}
+
+.contact-banner-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.contact-banner-sub {
+  font-size: 0.85rem;
+  letter-spacing: 0.35em;
+  color: #028b8f;
+  text-transform: uppercase;
+}
+
+.contact-banner-title {
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.contact-banner-divider {
+  width: 80px;
+  height: 3px;
+  background: #028b8f;
+  margin: 0.4rem 0;
+}
+
+.contact-banner-breadcrumb {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.breadcrumb-sep {
+  color: #028b8f;
+}
+
+.breadcrumb-active {
+  color: #028b8f;
+}
+
+/* ================================================================
+   INFO CARDS
+   ================================================================ */
+.contact-info-section {
+  padding: 5rem 2rem 3rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.contact-info-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.contact-info-card {
+  background: #181818;
+  border: 1px solid #2a2a2a;
+  border-top: 3px solid #028b8f;
+  padding: 2.2rem 1.6rem;
+  text-align: center;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+  animation: slideIn 0.55s ease-out both;
+}
+
+.contact-info-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(2, 139, 143, 0.18);
+  border-color: #028b8f;
+}
+
+.card-delay-0 {
+  animation-delay: 0s;
+}
+.card-delay-1 {
+  animation-delay: 0.1s;
+}
+.card-delay-2 {
+  animation-delay: 0.2s;
+}
+
+.info-card-icon {
+  width: 56px;
+  height: 56px;
+  background: rgba(2, 139, 143, 0.15);
+  border: 1.5px solid #028b8f;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.2rem;
+  color: #028b8f;
+}
+
+.info-card-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.contact-info-card h3 {
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  color: #028b8f;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.contact-info-card p {
+  font-size: 0.82rem;
+  color: #bbb;
+  line-height: 2;
+  letter-spacing: 0.04em;
+}
+
+/* ================================================================
+   FORM + MAP SECTION
+   ================================================================ */
+.contact-main-section {
+  padding: 4rem 2rem 5rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* Section heading (matching website style) */
+.contact-section-heading {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.section-sub-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.3em;
+  color: #028b8f;
+  margin-bottom: 0.5rem;
+}
+
+.section-main-title {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.section-title-line {
+  width: 60px;
+  height: 3px;
+  background: #028b8f;
+  margin: 0.8rem auto 0;
+}
+
+/* Grid: form left, map right */
+.contact-form-map-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+/* ─── FORM ─── */
+.contact-form-box {
+  background: #181818;
+  border: 1px solid #2a2a2a;
+  padding: 2.5rem 2rem;
+}
+
+.form-success-msg {
+  background: rgba(2, 139, 143, 0.15);
+  border: 1px solid #028b8f;
+  color: #028b8f;
+  padding: 0.9rem 1.2rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.3rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: #028b8f;
+  text-transform: uppercase;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: #111;
+  border: 1px solid #333;
+  border-bottom: 2px solid #333;
+  color: #fff;
+  padding: 0.85rem 1rem;
+  font-family: "Zen Dots", sans-serif;
+  font-size: 0.8rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+  resize: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #555;
+}
+
+.form-group select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.form-group select option {
+  background: #1a1a1a;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #028b8f;
+  border-bottom-color: #028b8f;
+}
+
+/* Submit button — slanted style matching website */
+.contact-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1rem 2.2rem;
+  background: #028b8f;
+  clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%);
+  color: #fff;
+  font-family: "Zen Dots", sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    transform 0.2s ease;
+  align-self: flex-start;
+  margin-top: 0.5rem;
+}
+
+.contact-submit-btn:hover {
+  background: #026c70;
+  transform: translateX(4px);
+}
+
+.contact-submit-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* ─── MAP ─── */
+.contact-map-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  height: 100%;
+  min-height: 500px;
+  border: 1px solid #2a2a2a;
+  overflow: hidden;
+}
+
+.map-label {
+  background: #028b8f;
+  padding: 0.9rem 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.map-label svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.contact-map-box iframe {
+  flex: 1;
+  width: 100%;
+  min-height: 460px;
+  display: block;
+  filter: grayscale(30%) invert(5%);
+}
+
+/* ================================================================
+   SOCIAL STRIP
+   ================================================================ */
+.contact-social-strip {
+  background: #0d0d0d;
+  border-top: 1px solid #222;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.contact-social-strip > p {
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: #028b8f;
+  text-transform: uppercase;
+}
+
+.social-links {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #aaa;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition:
+    color 0.3s ease,
+    transform 0.2s ease;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid #2a2a2a;
+}
+
+.social-link svg {
+  width: 18px;
+  height: 18px;
+}
+
+.social-link:hover {
+  color: #028b8f;
+  border-color: #028b8f;
+  transform: translateY(-3px);
+}
+
+/* ================================================================
+   RESPONSIVE — TABLET (≤ 1024px)
+   ================================================================ */
+@media (max-width: 1024px) {
+  .contact-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .contact-form-map-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-map-box {
+    min-height: 400px;
+  }
+
+  .contact-map-box iframe {
+    min-height: 360px;
+  }
+}
+
+/* ================================================================
+   RESPONSIVE — MOBILE (≤ 640px)
+   ================================================================ */
+@media (max-width: 640px) {
+  .contact-banner {
+    height: 280px;
+    background-attachment: scroll; /* Fixed doesn't work well on mobile */
+  }
+
+  .contact-banner-title {
+    font-size: 2rem;
+  }
+
+  .contact-info-section {
+    padding: 3rem 1rem 2rem;
+  }
+
+  .contact-info-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .contact-main-section {
+    padding: 3rem 1rem 4rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form-box {
+    padding: 1.5rem 1rem;
+  }
+
+  .contact-submit-btn {
+    width: 100%;
+    justify-content: center;
+    clip-path: none;
+  }
+
+  .contact-map-box {
+    min-height: 300px;
+  }
+
+  .contact-map-box iframe {
+    min-height: 280px;
+  }
+
+  .contact-social-strip {
+    padding: 2rem 1rem;
+  }
+
+  .social-links {
+    gap: 0.8rem;
+  }
+
+  .social-link span {
+    display: none; /* icon only on mobile */
+  }
+
+  .social-link {
+    padding: 0.6rem 0.9rem;
+  }
+}
